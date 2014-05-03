@@ -21,7 +21,7 @@
             </li>
         </ol>
 
-        <button type="button" class="close-activity-btn pull-right btn btn-danger" ng-click="fireStopCurrentActivity()" ng-disabled="activeActivity==null">
+        <button type="button" class="close-activity-btn pull-right btn btn-danger" ng-click="fireStopCurrentActivity()" ng-disabled="activitiesStack.length==0">
             <span class="glyphicon glyphicon-chevron-left"></span>
         </button>
 

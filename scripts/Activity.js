@@ -88,8 +88,17 @@ define(['jquery'], function($) {
     };
 
     Activity.prototype.stop = function() {
-        return this.getView().then(function(view) {
-            view.remove();
+        var self = this;
+        //testing waiting stop
+        var stopping = new Promise(function(resolve,reject) {
+            setTimeout(function() {
+               resolve();
+            },100);
+        });
+        return stopping.then(function() {
+            return self.getView().then(function(view) {
+                view.remove();
+            });
         });
     };
 

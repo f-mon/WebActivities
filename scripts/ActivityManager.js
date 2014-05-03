@@ -17,12 +17,17 @@ define(["angular","scripts/Activity"], function (a,Activity) {
         this.activitiesStack = activitiesStack;
 
         this.startRootActivity = function (activityDefinitionName, configs) {
-            return this.stopAllActivities().then(this.startOneActivity(activityDefinitionName));
+            var self= this;
+            return this.stopAllActivities().then(function() {
+                self.startOneActivity(activityDefinitionName);
+            });
         };
 
         this.startChildActivity = function (activityDefinitionName, configs) {
             var self= this;
-            return self.pauseCurrentActivity().then(this.startOneActivity(activityDefinitionName));
+            return self.pauseCurrentActivity().then(function() {
+                self.startOneActivity(activityDefinitionName);
+            });
         };
 
         this.startOneActivity = function(activityDefinitionName) {
@@ -33,18 +38,30 @@ define(["angular","scripts/Activity"], function (a,Activity) {
                     reject(new Error("Nessuna activity Definition trovata con nome: "+activityDefinitionName));
                 }
                 var newActivity = new Activity(activityDefinition);
-                self.activitiesStack.push(newActivity);
+                $rootScope.$apply(function() {
+                    self.activitiesStack.push(newActivity);
+                });
                 $rootScope.$broadcast("activityStartedEvent",newActivity);
                 resolve(newActivity);
             });
         }
 
         this.stopAllActivities = function() {
+            console.log("stopAllActivities");
             if (top()==null) {
                 return Promise.resolve(null);
             }
             var self= this;
-            return this.stopCurrentActivity().then(this.stopAllActivities());
+            return this.stopCurrentActivity().then(function() {
+                return self.stopAllActivities();
+            });
+        };
+
+        this.stopCurrentActivity = function () {
+            var self= this;
+            return this.stopOneActivity().then(function() {
+                return self.resumeOneActivity();
+            });
         };
 
         this.stopOneActivity = function() {
@@ -53,8 +70,10 @@ define(["angular","scripts/Activity"], function (a,Activity) {
                 return Promise.resolve(null);
             }
             var self= this;
-            self.activitiesStack.splice(self.activitiesStack.length-1,1);
             return currentActivity.stop().then(function() {
+                $rootScope.$apply(function() {
+                    self.activitiesStack.splice(self.activitiesStack.length-1,1);
+                });
                 $rootScope.$broadcast("activityStoppedEvent",currentActivity);
             });
         };
@@ -79,7 +98,6 @@ define(["angular","scripts/Activity"], function (a,Activity) {
             });
         };
 
-
         this.getActivityDefinition = function (activityDefinitionName) {
             for (var i = 0; i < this.activityDefinitions.length; i++) {
                 var obj = this.activityDefinitions[i];
@@ -90,16 +108,8 @@ define(["angular","scripts/Activity"], function (a,Activity) {
             return null;
         };
 
-
         this.registerActivity = function (activityDefinition) {
             this.activityDefinitions.push(activityDefinition);
-        };
-
-        this.stopCurrentActivity = function () {
-            var self= this;
-            return this.stopOneActivity().then(function() {
-                return self.resumeOneActivity();
-            });
         };
 
     };
