@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <link rel='stylesheet' href='style/style.css' type='text/css' media='all' />
+    <script data-main="main" src="bower_components/requirejs/require.js"></script>
+
+</head>
+<body ng-controller="WorkbenchController" id="workbench" ng-cloak>
+
+<div class="workbench">
+    <div class="northPanel">
+
+        <ol class="breadcrumb pull-left">
+            <li ng-repeat="activity in activitiesStack">
+                <a href="#">{{activity.activityDefinition.name}}</a>
+            </li>
+        </ol>
+
+        <button type="button" class="close-activity-btn pull-right btn btn-danger" ng-click="fireStopCurrentActivity()" ng-disabled="activeActivity==null">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </button>
+
+    </div>
+    <div class="westPanel">
+
+
+        <div class="checkbox" style="padding-left: 35px;">
+            <label>
+                <input type="checkbox" ng-model="startAsChild"> Start as child Activity?
+            </label>
+        </div>
+
+        <nav>
+            <ul class="nav nav-stacked">
+                <li ng-repeat="activityDef in activityDefinitions">
+                    <a href="#" ng-click="startRootActivity(activityDef)">{{activityDef.name}}</a>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+    <div class="centerPanel" id="activities-container">
+
+    </div>
+    <div class="eastPanel">
+
+    </div>
+    <div class="southPanel">
+
+    </div>
+</div>
+
+
+</body>
+</html>

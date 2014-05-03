@@ -1,0 +1,84 @@
+
+
+.workbench {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+.workbench > .northPanel {
+    position: absolute;
+    top: 0px;
+    height: 36px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+
+    border-bottom: solid 1px rgb(218, 218, 218);
+}
+.workbench > .westPanel {
+    position: absolute;
+    top: 36px;
+    bottom: 30px;
+    left: 0px;
+    width: 200px;
+    overflow: auto;
+
+    border-right: solid 1px rgb(218, 218, 218);
+}
+.workbench > .eastPanel {
+    position: absolute;
+    top: 36px;
+    bottom: 30px;
+    right: 0px;
+    width: 0px;
+    overflow: auto;
+}
+.workbench > .centerPanel {
+    position: absolute;
+    top: 36px;
+    bottom: 30px;
+    left: 200px;
+    right: 0px;
+    overflow: auto;
+}
+.workbench > .southPanel {
+    position: absolute;
+    bottom: 0px;
+    height: 30px;
+    left: 0px;
+    right: 0px;
+    overflow: hidden;
+
+    border-top: solid 1px rgb(218, 218, 218);
+}
+
+
+
+.activity-container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    border: 0px;
+}
+
+
+.northPanel {
+    background-color: #f5f5f5;
+}
+.northPanel > .breadcrumb {
+    margin: 0px;
+    height: 100%;
+}
+
+.close-activity-btn {
+    border-radius: 0;
+    height: 100%;
+}

@@ -1,0 +1,27 @@
+
+
+<h3> Test Activity example </h3>
+
+<input type="text">
+
+<script>
+
+    $(function() {
+        $('#my-button').click(function() {
+            var scope = angular.element("#workbench").scope();
+            scope.$apply(function() {
+                openChild('testActivity');
+            });
+        });
+    });
+
+    var openChild = function(childActivityName) {
+
+        activityManager.startChildActivity(childActivityName);
+
+    };
+
+</script>
+
+
+<button type="button" id="my-button">Start child Activity: 'testActivity'</button>
