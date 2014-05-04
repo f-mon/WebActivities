@@ -7,10 +7,18 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 
     <link rel='stylesheet' href='style/style.css' type='text/css' media='all' />
-    <script data-main="main" src="bower_components/requirejs/require.js"></script>
+
+    <script src="bower_components/jquery/dist/jquery.js" type="application/javascript"></script>
+    <script src="bower_components/angular/angular.js" type="application/javascript"></script>
+
+    <script src="scripts/WorkbenchModule.js" type="application/javascript"></script>
+    <script src="scripts/Activity.js" type="application/javascript"></script>
+    <script src="scripts/ActivityManager.js" type="application/javascript"></script>
+
+    <script src="sample/AppModule.js" type="application/javascript"></script>
 
 </head>
-<body ng-controller="WorkbenchController" id="workbench" ng-cloak>
+<body ng-app="AppModule" ng-controller="WorkbenchController" id="workbench" ng-cloak>
 
 <div class="workbench">
     <div class="northPanel">

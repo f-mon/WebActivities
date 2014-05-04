@@ -1,14 +1,12 @@
-define(["jquery", "angular", "scripts/Activity", "scripts/ActivityManager"], function ($, a, Activity, ActivityManager) {
+angular.module('WorkbenchModule', [])
 
-    var module = angular.module('WorkbenchModule', []);
-
-    module.factory('activityManager',function($rootScope) {
-        var activityManager = new ActivityManager($rootScope);
+    .factory('activityManager', function (ActivityManager) {
+        var activityManager = new ActivityManager();
         window.activityManager = activityManager;
         return activityManager;
-    });
+    })
 
-    module.controller('WorkbenchController', function ($scope, activityManager) {
+    .controller('WorkbenchController', function ($scope, activityManager) {
 
         $scope.activitiesStack = activityManager.activitiesStack;
         $scope.activityDefinitions = activityManager.activityDefinitions;
@@ -35,5 +33,3 @@ define(["jquery", "angular", "scripts/Activity", "scripts/ActivityManager"], fun
 
     });
 
-    return module;
-});

@@ -1,8 +1,5 @@
-define(["scripts/WorkbenchModule"], function() {
-
-    var module = angular.module('AppModule', ['WorkbenchModule']);
-
-    module.run(function(activityManager,$timeout) {
+angular.module('AppModule', ['WorkbenchModule'])
+    .run(function (activityManager) {
 
         activityManager.registerActivity({
             name: "testActivity",
@@ -23,8 +20,4 @@ define(["scripts/WorkbenchModule"], function() {
             startable: true
         });
 
-
     });
-
-    return module;
-});
