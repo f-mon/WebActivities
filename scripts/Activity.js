@@ -1,6 +1,6 @@
 angular.module('WorkbenchModule')
 
-    .factory('Activity', function () {
+    .factory('Activity', function ($q) {
 
         var activityInstanceIdCounter = 0;
 
@@ -34,7 +34,7 @@ angular.module('WorkbenchModule')
 
         Activity.prototype.getView = function () {
             if (this.view != null) {
-                return Promise.resolve(this.view);
+                return $q.when(this.view);
             }
             var self = this;
             if (this.activityDefinition.iframe) {
@@ -52,17 +52,17 @@ angular.module('WorkbenchModule')
 
         Activity.prototype.iframeViewLoad = function () {
             var element = $("<iframe src='" + this.activityDefinition.url + "' id='activity_" + this.activityInstanceId + "' class='activity-container' ></iframe>");
-            return Promise.resolve(element);
+            return $q.when(element);
         };
 
         Activity.prototype.templateViewLoad = function () {
             var self = this;
-            return new Promise(function (resolve, reject) {
-                var element = $("<div id='activity_" + self.activityInstanceId + "' class='activity-container' ></div>");
-                element.load(self.activityDefinition.template, function () {
-                    resolve(element);
-                });
+            var deferred = $q.defer();
+            var element = $("<div id='activity_" + self.activityInstanceId + "' class='activity-container' ></div>");
+            element.load(self.activityDefinition.template, function () {
+                deferred.resolve(element);
             });
+            return deferred.promise;
         };
 
         Activity.prototype.pause = function () {
@@ -90,12 +90,14 @@ angular.module('WorkbenchModule')
 
         Activity.prototype.stop = function () {
             var self = this;
+
             //testing waiting stop
-            var stopping = new Promise(function (resolve, reject) {
-                setTimeout(function () {
-                    resolve();
-                }, 100);
-            });
+            var deferred = $q.defer();
+            var stopping = deferred.promise;
+            setTimeout(function () {
+                deferred.resolve();
+            }, 100);
+
             return stopping.then(function () {
                 return self.getView().then(function (view) {
                     view.remove();
